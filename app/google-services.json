@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "932980254588",
+    "project_id": "projeto-clinica-5c360",
+    "storage_bucket": "projeto-clinica-5c360.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932980254588:android:4431264b758a62c089a6f9",
+        "android_client_info": {
+          "package_name": "com.lz.atendimentoclinica"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9b-UCnePpnyGFn-EOTftasxpNBr2qaus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932980254588:android:e66b5b808353bb2489a6f9",
+        "android_client_info": {
+          "package_name": "com.lz.clinica"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9b-UCnePpnyGFn-EOTftasxpNBr2qaus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
