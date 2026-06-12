@@ -1,7 +1,7 @@
 package com.lz.atendimentoclinica;
 
 public class Medico {
-    private String id; // ADICIONADO: Necessário para o m.getId() funcionar
+    private String id;
     private String nome;
     private String crm;
     private String especialidade;

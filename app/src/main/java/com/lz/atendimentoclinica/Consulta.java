@@ -6,10 +6,10 @@ public class Consulta {
     private String clinicaId;
     private String medicoId;
     private String data;
-    private String hora;
+    private String horario;      
     private String nomePaciente;
     private String nomeMedico;
-    private String especialidade; // CORRIGIDO: era "getEspecialidade"
+    private String especialidade;
     private String status;
 
     public Consulta() {}
@@ -29,8 +29,8 @@ public class Consulta {
     public String getData() { return data; }
     public void setData(String data) { this.data = data; }
 
-    public String getHora() { return hora; }
-    public void setHora(String hora) { this.hora = hora; }
+    public String getHorario() { return horario; }
+    public void setHorario(String horario) { this.horario = horario; }
 
     public String getNomePaciente() { return nomePaciente; }
     public void setNomePaciente(String nomePaciente) { this.nomePaciente = nomePaciente; }

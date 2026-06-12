@@ -1,42 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment"> <fragment
-    android:id="@+id/loginFragment"
-    android:name="com.lz.atendimentoclinica.LoginFragment"
-    android:label="Login"
-    tools:layout="@layout/fragment_login">
-
-    <action
-        android:id="@+id/action_loginFragment_to_cadastroFragment"
-        app:destination="@id/cadastroFragment" />
-
-    <action
-        android:id="@+id/action_loginFragment_to_dashboardFragment"
-        app:destination="@id/dashboardFragment"
-        app:popUpTo="@id/nav_graph"
-        app:popUpToInclusive="true" />
-</fragment>
+    app:startDestination="@id/medicosFragment">
 
     <fragment
-        android:id="@+id/cadastroFragment"
-        android:name="com.lz.atendimentoclinica.CadastroFragment"
-        android:label="Cadastro"
-        tools:layout="@layout/fragment_cadastro">
-
-        <action
-            android:id="@+id/action_cadastroFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:id="@+id/medicosFragment"
+        android:name="com.lz.atendimentoclinica.MedicosFragment"
+        android:label="Médicos" />
 
     <fragment
-        android:id="@+id/dashboardFragment"
-        android:name="com.lz.atendimentoclinica.DashboardFragment"
-        android:label="Dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/agendamentosFragment"
+        android:name="com.lz.atendimentoclinica.AgendamentosFragment"
+        android:label="Agendamentos" />
+
+    <fragment
+        android:id="@+id/pacientesFragment"
+        android:name="com.lz.atendimentoclinica.PacientesFragment"
+        android:label="Pacientes" />
+
+    <fragment
+        android:id="@+id/horariosFragment"
+        android:name="com.lz.atendimentoclinica.HorariosFragment"
+        android:label="Horários" />
 
 </navigation>

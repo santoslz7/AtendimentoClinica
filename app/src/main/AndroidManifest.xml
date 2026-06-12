@@ -17,13 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".CadastroActivity" />
-        <activity android:name=".DashboardActivity"/>
-        <activity android:name=".AgendamentosActivity"/>
-        <activity android:name=".MedicosActivity"/>
+        <activity android:name="com.lz.atendimentoclinica.DashboardActivity" android:exported="false" />
         <activity android:name=".CadastroMedicoActivity"/>
-        <activity android:name=".HorariosActivity"/>
-        <activity android:name=".PacientesActivity"/>
 
     </application>
 </manifest>

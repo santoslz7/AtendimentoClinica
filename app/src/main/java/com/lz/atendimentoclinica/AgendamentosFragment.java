@@ -1,8 +1,14 @@
 package com.lz.atendimentoclinica;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -12,19 +18,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AgendamentosActivity extends AppCompatActivity {
+public class AgendamentosFragment extends Fragment {
 
     private FirebaseFirestore db;
     private AgendamentoAdapter adapter;
     private final List<Consulta> consultas = new ArrayList<>();
     private String clinicaId;
+    private TextView tvVazio;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_agendamentos, container, false);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_generica);
-
-        if (getSupportActionBar() != null) getSupportActionBar().setTitle("Agendamentos");
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         db = FirebaseFirestore.getInstance();
 
@@ -32,8 +44,10 @@ public class AgendamentosActivity extends AppCompatActivity {
             clinicaId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
 
-        RecyclerView recycler = findViewById(R.id.recyclerView);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
+        tvVazio = view.findViewById(R.id.tvVazio);
+
+        RecyclerView recycler = view.findViewById(R.id.recyclerView);
+        recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         adapter = new AgendamentoAdapter(consultas, new AgendamentoAdapter.OnAcaoListener() {
             @Override
@@ -55,13 +69,15 @@ public class AgendamentosActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(snap -> {
                     List<DocumentSnapshot> docs = snap.getDocuments();
+                    consultas.clear();
+
                     if (docs.isEmpty()) {
-                        consultas.clear();
                         adapter.notifyDataSetChanged();
+                        tvVazio.setVisibility(View.VISIBLE);
                         return;
                     }
 
-                    consultas.clear();
+                    tvVazio.setVisibility(View.GONE);
                     AtomicInteger pendentes = new AtomicInteger(docs.size());
 
                     for (DocumentSnapshot doc : docs) {
@@ -72,7 +88,6 @@ public class AgendamentosActivity extends AppCompatActivity {
                         }
                         c.setId(doc.getId());
 
-                        // Se nomePaciente ou nomeMedico estiverem vazios, busca pelo ID
                         boolean temNomePaciente = c.getNomePaciente() != null && !c.getNomePaciente().isEmpty();
                         boolean temNomeMedico   = c.getNomeMedico()   != null && !c.getNomeMedico().isEmpty();
 
@@ -80,13 +95,12 @@ public class AgendamentosActivity extends AppCompatActivity {
                             consultas.add(c);
                             if (pendentes.decrementAndGet() == 0) adapter.notifyDataSetChanged();
                         } else {
-                            // Busca nome do paciente se necessário
                             preencherNomes(c, temNomePaciente, temNomeMedico, pendentes);
                         }
                     }
                 })
                 .addOnFailureListener(e ->
-                        Toast.makeText(this, "Erro ao carregar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        Toast.makeText(requireContext(), "Erro ao carregar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void preencherNomes(Consulta c, boolean temNomePaciente, boolean temNomeMedico, AtomicInteger pendentes) {
@@ -145,16 +159,15 @@ public class AgendamentosActivity extends AppCompatActivity {
                     });
         }
     }
-
     private void atualizarStatus(String id, String novoStatus) {
         if (id == null) return;
         db.collection("consultas").document(id)
                 .update("status", novoStatus)
                 .addOnSuccessListener(v -> {
-                    Toast.makeText(this, "Status: " + novoStatus, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Status: " + novoStatus, Toast.LENGTH_SHORT).show();
                     carregarAgendamentos();
                 })
                 .addOnFailureListener(e ->
-                        Toast.makeText(this, "Erro ao atualizar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        Toast.makeText(requireContext(), "Erro ao atualizar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

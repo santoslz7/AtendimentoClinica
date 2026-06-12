@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
-
 public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.ViewHolder> {
 
     private final List<Consulta> lista;
@@ -27,7 +26,8 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agendamento, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_agendamento, parent, false);
         return new ViewHolder(view);
     }
 
@@ -35,45 +35,45 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Consulta c = lista.get(position);
 
-        // CORRIGIDO: Vinculação de textos idêntica à sua imagem
-        holder.tvNomePaciente.setText("Paciente: " + (c.getNomePaciente() != null ? c.getNomePaciente() : "-"));
+        holder.tvNomePaciente.setText("Paciente: " +
+                (c.getNomePaciente() != null ? c.getNomePaciente() : "-"));
 
-        holder.tvMedico.setText("Médico: " + (c.getNomeMedico() != null ? c.getNomeMedico() : "-")
-                + " - " + (c.getEspecialidade() != null ? c.getEspecialidade() : ""));
+        holder.tvMedico.setText("Médico: " +
+                (c.getNomeMedico() != null ? c.getNomeMedico() : "-") +
+                " - " +
+                (c.getEspecialidade() != null ? c.getEspecialidade() : ""));
 
-        holder.tvDataHora.setText("📅 " + c.getData() + "  ⏰ " + c.getHora());
+        // CORRIGIDO: usa getHorario() em vez de getHora()
+        String data    = c.getData()    != null ? c.getData()    : "-";
+        String horario = c.getHorario() != null ? c.getHorario() : "-";
+        holder.tvDataHora.setText("📅 " + data + "  ⏰ " + horario);
 
-        // Cliques dos botões de ação
+        holder.tvStatus.setText(c.getStatus() != null ? c.getStatus() : "-");
+
         holder.btnConfirmar.setOnClickListener(v -> {
-            if (listener != null && c.getId() != null) {
-                listener.onConfirmar(c.getId());
-            }
+            if (listener != null && c.getId() != null) listener.onConfirmar(c.getId());
         });
 
         holder.btnCancelar.setOnClickListener(v -> {
-            if (listener != null && c.getId() != null) {
-                listener.onCancelar(c.getId());
-            }
+            if (listener != null && c.getId() != null) listener.onCancelar(c.getId());
         });
     }
 
     @Override
-    public int getItemCount() {
-        return lista.size();
-    }
+    public int getItemCount() { return lista.size(); }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNomePaciente, tvMedico, tvDataHora;
+        TextView tvNomePaciente, tvMedico, tvDataHora, tvStatus;
         Button btnConfirmar, btnCancelar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Mapeia os componentes do layout item_agendamento.xml
             tvNomePaciente = itemView.findViewById(R.id.tvNomePaciente);
-            tvMedico = itemView.findViewById(R.id.tvMedico);
-            tvDataHora = itemView.findViewById(R.id.tvDataHora);
-            btnConfirmar = itemView.findViewById(R.id.btnConfirmar);
-            btnCancelar = itemView.findViewById(R.id.btnCancelar);
+            tvMedico       = itemView.findViewById(R.id.tvMedico);
+            tvDataHora     = itemView.findViewById(R.id.tvDataHora);
+            tvStatus       = itemView.findViewById(R.id.tvStatus);
+            btnConfirmar   = itemView.findViewById(R.id.btnConfirmar);
+            btnCancelar    = itemView.findViewById(R.id.btnCancelar);
         }
     }
 }

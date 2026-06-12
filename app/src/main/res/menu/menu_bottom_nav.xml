@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/medicosFragment"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="Médicos"/>
+
+    <item
+        android:id="@+id/agendamentosFragment"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Agendamentos"/>
+
+    <item
+        android:id="@+id/pacientesFragment"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Pacientes"/>
+
+    <item
+        android:id="@+id/horariosFragment"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="Horários"/>
+
+</menu>
